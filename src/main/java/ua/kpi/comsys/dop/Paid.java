@@ -9,7 +9,7 @@ public record Paid(String paymentId, BigDecimal amount) implements OrderStatus {
             throw new IllegalArgumentException("Payment ID cannot be null or blank");
         }
         if (amount == null || amount.signum() <= 0) {
-            throw new IllegalArgumentException("Amount must be greater than 0");
+            throw new IllegalArgumentException("Amount must be greater than 0 and cannot be null");
         }
     }
 }
