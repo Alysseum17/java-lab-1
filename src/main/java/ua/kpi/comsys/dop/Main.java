@@ -1,17 +1,40 @@
 package ua.kpi.comsys.dop;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
+public class Main {
+
+    public static void main(String[] args) {
+        OrderProcessor processor = new OrderProcessor();
+
+        System.out.print(processor.process(new Pending()) + "\n");
+        System.out.print(processor.process(new Paid("PAY-123", new BigDecimal("100.50"))) + "\n");
+        System.out.print(processor.process(new Shipped("TRK-456", LocalDate.of(2026, 10, 10))) + "\n");
+        System.out.print(processor.process(new Cancelled("Out of stock")) + "\n");
+
+        try {
+            processor.process(null);
+        } catch (IllegalArgumentException e) {
+            System.out.println("null -> " + e.getMessage() + "\n");
+        }
+
+        try {
+            new Paid("PAY-123", BigDecimal.ZERO);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Paid(amount=0) -> " + e.getMessage() + "\n");
+        }
+
+        try {
+            new Shipped("  ", LocalDate.now());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Shipped(blank) -> " + e.getMessage() + "\n");
+        }
+
+        try {
+            new Cancelled(null);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Cancelled(null) -> " + e.getMessage() + "\n");
         }
     }
 }
