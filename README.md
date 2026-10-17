@@ -133,7 +133,7 @@ mvn -version
 
 ## Запуск тестів
 
-Тести написані з використанням **JUnit 6**.
+Тести написані з використанням **JUnit 5**.
 
 ```bash
 mvn clean test
@@ -163,5 +163,5 @@ target/site/jacoco/index.html
 
 - Java 25
 - Maven 3.9.16
-- JUnit 6.1.3
+- JUnit 5.14.4
 - JaCoCo 0.8.15
